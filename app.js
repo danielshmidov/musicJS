@@ -9,6 +9,7 @@ class Drunkit {
   repeat() {
     let step = this.index % 8;
     console.log(step);
+    this.index++; //Incrementing the index to be freaking happy
   }
   start() {
     setInterval(() => {
@@ -18,3 +19,5 @@ class Drunkit {
 }
 
 const drumkit = new Drunkit();
+
+drumkit.start(); //starting the drumkit
