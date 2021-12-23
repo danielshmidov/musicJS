@@ -1,1 +1,2 @@
 # musicJS
+LOL HI THIS IS ME LEARNING JS
