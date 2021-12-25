@@ -5,11 +5,12 @@ class Drunkit {
     this.SnareAudio = document.querySelector(".snare-sound");
     this.HihatAudio = document.querySelector(".hihat-sound");
     this.index = 0;
+    this.bpm = 150;
   }
   repeat() {
     let step = this.index % 8;
-    console.log(step);
-    this.index++; //Incrementing the index to be freaking happy
+    const activeBars = document.querySelectorAll(`.b`+step);   //Selecting the active bar
+    this.index++; //Incrementing the index 
   }
   start() {
     setInterval(() => {
