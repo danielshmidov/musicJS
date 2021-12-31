@@ -13,6 +13,7 @@ class Drunkit {
     this.bpm = 150;
     this.isPlaying = null;
     this.select = document.querySelectorAll("select");
+    this.muteBtn = document.querySelectorAll(".mute");
   }
 
   activePad() {
@@ -83,9 +84,37 @@ class Drunkit {
       case "hihat-select":
         this.HihatAudio.src = selectionValue;
         break;
-
     }
-    
+  }
+
+  mute(e) {
+    const muteIndex = e.target.getAttribute("data-track");
+    e.target.classList.toggle("active");
+    if (e.target.classList.contains("active")) {
+      switch (muteIndex) {
+        case "0":
+          this.KickAudio.volume = 0;
+          break;
+        case "1":
+          this.snareAudio.volume = 0;
+          break;
+        case "2":
+          this.HihatAudio.volume = 0;
+          break;
+      }
+      } else {
+        switch (muteIndex) {
+          case "0":
+            this.KickAudio.volume = 1;
+            break;
+          case "1":
+            this.snareAudio.volume = 1;
+            break;
+          case "2":
+            this.HihatAudio.volume = 1;
+            break;
+      }
+    }
   }
 }
 
@@ -108,5 +137,11 @@ drumkit.playButton.addEventListener("click", (e) => {
 drumkit.select.forEach((select) => {
   select.addEventListener("change", (e) => {
     drumkit.changeSound(e);
+  });
+});
+
+drumkit.muteBtn.forEach((muteBtn) => {
+  muteBtn.addEventListener("click", (e) => {
+    drumkit.mute(e);
   });
 });
