@@ -16,7 +16,25 @@ class Drunkit {
   repeat() {
     let step = this.index % 8;
     const activeBars = document.querySelectorAll(`.b` + step); //Selecting the active bar
-    console.log(step);
+    console.log(activeBars);
+    //loop over the bars
+    activeBars.forEach((bar) => {
+      bar.style.animation = "playTrack 0.3s alternate ease-in-out 2";
+      //check if pad is active
+      if (bar.classList.contains("active")) {
+        //check what kind of sound to produce
+        if (bar.classList.contains("kick-pad")) {
+          this.KickAudio.currentTime = 0;
+          this.KickAudio.play();
+        } else if (bar.classList.contains("snare-pad")) {
+          this.SnareAudio.currentTime = 0;
+          this.SnareAudio.play();
+        } else if (bar.classList.contains("hihat-pad")) {
+          this.HihatAudio.currentTime = 0;
+          this.HihatAudio.play();
+        }
+      }
+    });
     this.index++; //Incrementing the index
   }
   start() {
@@ -31,6 +49,9 @@ const drumkit = new Drunkit();
 
 drumkit.pads.forEach((pad) => {
   pad.addEventListener("click", drumkit.activePad);
+  pad.addEventListener("animationend", function () {
+    this.style.animation = "";
+  });
 });
 
 drumkit.playButton.addEventListener("click", (e) => {
