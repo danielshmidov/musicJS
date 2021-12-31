@@ -1,5 +1,4 @@
-//TODO change name of the class
-class Drunkit {
+class Drumkit {
   constructor() {
     this.pads = document.querySelectorAll(".pad");
     this.playButton = document.querySelector(".play");
@@ -14,6 +13,7 @@ class Drunkit {
     this.isPlaying = null;
     this.select = document.querySelectorAll("select");
     this.muteBtn = document.querySelectorAll(".mute");
+    this.tempoSlider = document.querySelector(".tempo-slider");
   }
 
   activePad() {
@@ -102,23 +102,38 @@ class Drunkit {
           this.HihatAudio.volume = 0;
           break;
       }
-      } else {
-        switch (muteIndex) {
-          case "0":
-            this.KickAudio.volume = 1;
-            break;
-          case "1":
-            this.snareAudio.volume = 1;
-            break;
-          case "2":
-            this.HihatAudio.volume = 1;
-            break;
+    } else {
+      switch (muteIndex) {
+        case "0":
+          this.KickAudio.volume = 1;
+          break;
+        case "1":
+          this.snareAudio.volume = 1;
+          break;
+        case "2":
+          this.HihatAudio.volume = 1;
+          break;
       }
+    }
+  }
+
+  changeTempo(e) {
+    const tempoText = document.querySelector(".tempo-nr");
+    tempoText.innerHTML = e.target.value;
+  }
+
+  updateTempo(e) {
+    clearInterval(this.isPlaying);
+    this.bpm = e.target.value;
+    this.isPlaying = null;
+    const playBtn = document.querySelector(".play");
+    if (playBtn.classList.contains(".active")) {
+      this.start();
     }
   }
 }
 
-const drumkit = new Drunkit();
+const drumkit = new Drumkit();
 
 //Event Listeners
 
@@ -144,4 +159,12 @@ drumkit.muteBtn.forEach((muteBtn) => {
   muteBtn.addEventListener("click", (e) => {
     drumkit.mute(e);
   });
+});
+
+drumkit.tempoSlider.addEventListener("input", (e) => {
+  drumkit.changeTempo(e);
+});
+
+drumkit.tempoSlider.addEventListener("change", (e) => {
+  drumkit.updateTempo(e);
 });
