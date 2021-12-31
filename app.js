@@ -42,10 +42,14 @@ class Drunkit {
     const interval = (60 / this.bpm) * 1000; // a representation of how quickly the interval is being reached
     //Check is it is playing
     if (!this.isPlaying) {
-    this.isPlaying = setInterval(() => {
-      this.repeat();
-    }, interval);
-  }
+      this.isPlaying = setInterval(() => {
+        this.repeat();
+      }, interval);
+    } else {
+      //clear the interval
+      clearInterval(this.isPlaying);
+      this.isPlaying = null;
+    }
   }
 }
 
