@@ -1,13 +1,18 @@
+//TODO change name of the class
 class Drunkit {
   constructor() {
     this.pads = document.querySelectorAll(".pad");
     this.playButton = document.querySelector(".play");
     this.KickAudio = document.querySelector(".kick-sound");
     this.SnareAudio = document.querySelector(".snare-sound");
+    this.currentKick = "./allSounds/kick-classic.wav";
+    this.currentSnare = "./allSounds/snare-acoustic01.wav";
+    this.currentHihat = "./allSounds/hihat-acoustic01.wav";
     this.HihatAudio = document.querySelector(".hihat-sound");
     this.index = 0;
     this.bpm = 150;
     this.isPlaying = null;
+    this.select = document.querySelectorAll("select");
   }
 
   activePad() {
@@ -38,6 +43,7 @@ class Drunkit {
     });
     this.index++; //Incrementing the index
   }
+
   start() {
     const interval = (60 / this.bpm) * 1000; // a representation of how quickly the interval is being reached
     //Check is it is playing
@@ -51,18 +57,41 @@ class Drunkit {
       this.isPlaying = null;
     }
   }
-  updateButton () {
+
+  updateButton() {
     if (!this.isPlaying) {
       this.playButton.innerHTML = "Stop";
-      this.playButton.classList.add('active');
+      this.playButton.classList.add("active");
     } else {
       this.playButton.innerHTML = "Play";
-      this.playButton.classList.remove('active');
+      this.playButton.classList.remove("active");
     }
+  }
+
+  changeSound(e) {
+    const selectionName = e.target.name;
+    const selectionValue = e.target.value;
+    // console.log(selectionName);
+    // console.log(selectionValue);
+    switch (selectionName) {
+      case "kick-select":
+        this.KickAudio.src = selectionValue;
+        break;
+      case "snare-select":
+        this.SnareAudio.src = selectionValue;
+        break;
+      case "hihat-select":
+        this.HihatAudio.src = selectionValue;
+        break;
+
+    }
+    
   }
 }
 
 const drumkit = new Drunkit();
+
+//Event Listeners
 
 drumkit.pads.forEach((pad) => {
   pad.addEventListener("click", drumkit.activePad);
@@ -74,4 +103,10 @@ drumkit.pads.forEach((pad) => {
 drumkit.playButton.addEventListener("click", (e) => {
   drumkit.updateButton();
   drumkit.start();
+});
+
+drumkit.select.forEach((select) => {
+  select.addEventListener("change", (e) => {
+    drumkit.changeSound(e);
+  });
 });
