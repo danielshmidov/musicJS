@@ -7,6 +7,7 @@ class Drunkit {
     this.HihatAudio = document.querySelector(".hihat-sound");
     this.index = 0;
     this.bpm = 150;
+    this.isPlaying = null;
   }
 
   activePad() {
@@ -39,9 +40,12 @@ class Drunkit {
   }
   start() {
     const interval = (60 / this.bpm) * 1000; // a representation of how quickly the interval is being reached
-    setInterval(() => {
+    //Check is it is playing
+    if (!this.isPlaying) {
+    this.isPlaying = setInterval(() => {
       this.repeat();
     }, interval);
+  }
   }
 }
 
