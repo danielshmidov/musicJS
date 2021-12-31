@@ -51,6 +51,15 @@ class Drunkit {
       this.isPlaying = null;
     }
   }
+  updateButton () {
+    if (!this.isPlaying) {
+      this.playButton.innerHTML = "Stop";
+      this.playButton.classList.add('active');
+    } else {
+      this.playButton.innerHTML = "Play";
+      this.playButton.classList.remove('active');
+    }
+  }
 }
 
 const drumkit = new Drunkit();
@@ -63,5 +72,6 @@ drumkit.pads.forEach((pad) => {
 });
 
 drumkit.playButton.addEventListener("click", (e) => {
+  drumkit.updateButton();
   drumkit.start();
 });
